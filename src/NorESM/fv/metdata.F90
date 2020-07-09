@@ -872,6 +872,9 @@ contains
       enddo
     else
     
+!ak+
+     if (.not. met_nudge_only_uvps) then
+!ak-
       if (.not.has_ts) then
          if (masterproc) then
             write(iulog,*) 'get_ocn_ice_frcs: TS is not in the met dataset and cannot set ocnfrc and icefrc'
@@ -879,6 +882,10 @@ contains
             call endrun('get_ocn_ice_frcs: TS is not in the met dataset')
          endif
       endif
+!ak+
+     endif
+!ak-
+
 
       do i = 1,ncol
 

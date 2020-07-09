@@ -31,6 +31,9 @@ begin
                                      ; 8 => CCN5    CCN at 0.5% supersaturation
                                      ; 9 => CCN6    CCN at 1.0% supersaturation
                                      ;10 => N_AER   Aerosol number concentration
+                                     ;11 => CDNC_B  Cloud top CDNC for comparison with Bennartz et al. (2017)
+                                     ;12 => KLEB_B  Level where CDNC_B is taken out
+                                     ;13 => SP REFFL Cloud droplet effective radius with MACv2-SP included
 ; *************************************************************************
  end if
  if (.not. isvar("format")) then        ; is format on command line?
@@ -218,6 +221,50 @@ varlev_II=f1_II[:]->PS
  end if
  var_II=(/(f1_II[:]->N_AER)/)
  varlev_II=(/(f1_II[:]->N_AER(:,L860_II,:,:))/)
+ else if (plot_type.eq.11) then
+ var="CDNC_B"                      ; name of plot
+ varname="CDNCcloudtop"          ; variable name used in text string
+ plot_name="CDNC_B"                ; name of the plot/figure
+ if(ModI.eq."CAM4-Oslo") then
+  var_I=(/(f1_I[:]->N_AER)/)*0.0
+  varlev_I=(/(f1_I[:]->N_AER(:,22,:,:))/)*0.0
+ else
+  var_I=1.e-6*(/(f1_I[:]->ACTNL_B)/)/((/(f1_I[:]->FCTL_B)/)+small)
+  varlev_I=1.e-6*(/(f1_I[:]->ACTNL_B)/)/((/(f1_I[:]->FCTL_B)/)+small)
+ end if
+  var_II=1.e-6*(/(f1_II[:]->ACTNL_B)/)/((/(f1_II[:]->FCTL_B)/)+small)
+  varlev_II=1.e-6*(/(f1_II[:]->ACTNL_B)/)/((/(f1_II[:]->FCTL_B)/)+small)
+ else if (plot_type.eq.12) then
+ var="KLEV_B"                      ; name of plot
+ varname="CDNC_B KLEV"          ; variable name used in text string
+ plot_name="KLEV_B"                ; name of the plot/figure
+ if(ModI.eq."CAM4-Oslo") then
+  var_I=(/(f1_I[:]->N_AER)/)*0.0
+  varlev_I=(/(f1_I[:]->N_AER(:,22,:,:))/)*0.0
+ else
+  var_I=(/(f1_I[:]->KLEV_B)/)/((/(f1_I[:]->FCTL_B)/)+small)
+  varlev_I=(/(f1_I[:]->KLEV_B)/)/((/(f1_I[:]->FCTL_B)/)+small)
+ end if
+ var_II=(/(f1_II[:]->KLEV_B)/)/((/(f1_II[:]->FCTL_B)/)+small)
+ varlev_II=(/(f1_II[:]->KLEV_B)/)/((/(f1_II[:]->FCTL_B)/)+small)
+
+ else if (plot_type.eq.13) then
+ var="SPREFFL"                      ; name of plot
+ varname="SPREFFL"                  ; variable name used in text string
+ plot_name="SPREFFL860hPa"          ; name of the plot/figure
+ if(ModI.eq."CAM4-Oslo") then
+  var_I=(/(f1_I[:]->REFFL)/)/((/(f1_I[:]->CLDFOC)/)+small)
+  varlev_I=(/(f1_I[:]->REFFL(:,22,:,:))/)/((/(f1_I[:]->CLDFOC(:,22,:,:))/)+small)
+ else
+  var_I=(/(f1_I[:]->AREL)/)/((/(f1_I[:]->FREQL)/)+small)
+  varlev_I=(/(f1_I[:]->AREL(:,L860_I,:,:))/)/((/(f1_I[:]->FREQL(:,L860_I,:,:))/)+small)
+ end if
+ var_II=(/(f1_II[:]->SPAREL)/)/((/(f1_II[:]->FREQL)/)+small)
+ varlev_II=(/(f1_II[:]->SPAREL(:,L860_II,:,:))/)/((/(f1_II[:]->FREQL(:,L860_II,:,:))/)+small)
+
+ end if
+ end if
+ end if
  end if
  end if
  end if
@@ -273,15 +320,18 @@ lat_II = f0_II->lat                                ; pull lat off file
 if (var .eq. "CDNC") then
 ;  digg=(/10,15,20,30,40,50,75,100,150,200/)
     digg=(/1,5,10,25,50,75,100,150,200,500/)
-   else if (var .eq. "REFFL") then
+   else if (var .eq. "REFFL" .or. var .eq. "SPREFFL") then
     digg=(/0,2,4,5,6,8,10,12,14,16/)
    else if (plot_type .eq. 10) then
     digg=(/25,50,100,500,1000,2500,5000,7500,10000,15000/)
    else if (plot_type .ge. 4 .and. plot_type .le. 9) then
 ;    digg=(/1,2.5,5,10,25,50,75,100,150,200/)
     digg=(/1,5,10,25,50,75,100,150,200,500/)
-   else  ; for ICNC
-    digg= (/.0005,.001,.003,.005,.01,.03,.05,.1,.3,.5/)
+    else if (plot_type .eq. 11) then
+     digg=(/5,10,20,40,60,80,100,120,140,160/)
+    else  ; for ICNC
+     digg= (/.0005,.001,.003,.005,.01,.03,.05,.1,.3,.5/)
+    end if
    end if
   end if
  end if
@@ -349,7 +399,7 @@ res@gsnRightString   = "avg = "+sprintf("%5.2f",(sum(dim_avg_n(varlev_Ia,0))/are
  else
   res@gsnLeftString   = "AWNC/FREQL (cm~S~-3~N~) at 860 hPa"
  end if
-else if (var .eq. "REFFL") then
+else if (var .eq. "REFFL" .or. var .eq. "SPREFFL") then
 res@gsnRightString   = "avg = "+sprintf("%5.2f",(sum(dim_avg_n(varlev_Ia,0))/area1))
  if(ModI.eq."CAM4-Oslo") then
   res@gsnLeftString   = "REFFL/CLDFOC (~F33~m~F21~m) at 867 hPa"
@@ -412,6 +462,14 @@ res@gsnRightString   = "avg = "+sprintf("%5.2f",(sum(dim_avg_n(varlev_Ia,0))/are
  else
   res@gsnLeftString   = "N_AER (cm~S~-3~N~) at 860 hPa"
  end if
+else if (var .eq. "CDNC_B") then
+res@gsnRightString   = "avg = "+sprintf("%5.2f",(sum(dim_avg_n(varlev_Ia,0))/area1))
+ if(ModI.eq."CAM4-Oslo") then
+  res@gsnLeftString   = "Not Available "
+ else
+  res@gsnLeftString   = "CDNCcldtop ACTNL_B/FCTL_B (cm~S~-3~N~)"
+ end if
+end if
 end if
 end if
 end if
@@ -456,6 +514,18 @@ else if (var .eq. "CCN6") then
 else if (var .eq. "N_AER") then
  res@gsnRightString   = "avg = "+sprintf("%5.2f",(sum(dim_avg_n(varlev_IIa,0))/area1))
  res@gsnLeftString   = "N_AER (cm~S~-3~N~) at 860 hPa"
+else if (var .eq. "CDNC_B") then
+ res@gsnRightString   = "avg = "+sprintf("%5.2f",(sum(dim_avg_n(varlev_IIa,0))/area1))
+ if(ModI.eq."CAM4-Oslo") then
+  res@gsnLeftString   = "Not Available "
+ else
+  res@gsnLeftString   = "CDNCcldtop ACTNL_B/FCTL_B (cm~S~-3~N~)"
+ end if
+else if (var .eq. "SPREFFL") then
+ res@gsnRightString   = "avg = "+sprintf("%5.2f",(sum(dim_avg_n(varlev_IIa,0))/area1))
+ res@gsnLeftString   = "SPAREL/FREQL (~F33~m~F21~m) at 860 hPa"
+end if
+end if
 end if
 end if
 end if

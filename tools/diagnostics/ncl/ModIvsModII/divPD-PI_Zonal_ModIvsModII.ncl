@@ -20,7 +20,7 @@ begin
 ; **** To be edited by the user if the ncl script is run interactively ****
 ;
 ; Define plot type and plot output format
- if (.not. isvar("plot_type")) then      ; is plot_type on command line?
+ if (.not. isvar("plot_type")) then      ; is plot_type on command line?  
   plot_type = 4                      ; 0 => CLOUD   Cloud fraction
                                      ; 1 => RH      Relative humidity RELHUM
                                      ; 2 => CLDLIQ  Cloud liquid amount 
@@ -28,6 +28,10 @@ begin
                                      ; 4 => RHW     Relative humidity RHW
                                      ; 5 => CDNC    Cloud droplet number concentration
                                      ; 6 => REFFL   Cloud droplet effective radius
+                                     ; 7 => DUST    Dust mass mixing ratio
+                                     ; 8 => BC      BC mass mixing ratio
+                                     ; 9 => ICNC    Ice nuclei number concentration
+                                     ;10 => REFFL vs SPREFFL  Cloud droplet effective radius
 ; *************************************************************************
  end if
  if (.not. isvar("format")) then        ; is format on command line?
@@ -100,7 +104,7 @@ begin
  var_I = 1.e-6*(/(f1PD_I[:]->AWNC)/)/((/(f1PD_I[:]->FREQL)/)+small) - 1.e-6*(/(f1PI_I[:]->AWNC)/)/((/(f1PI_I[:]->FREQL)/)+small)
  end if
  var_II = 1.e-6*(/(f1PD_II[:]->AWNC)/)/((/(f1PD_II[:]->FREQL)/)+small) - 1.e-6*(/(f1PI_II[:]->AWNC)/)/((/(f1PI_II[:]->FREQL)/)+small)
- else if (plot_type.eq.6) then
+else if (plot_type.eq.6) then
  var="REFFL"                      ; name of plot
  varname="REFFL"                  ; variable name used in text string
  plot_name="dREFFL_Zonal"          ; name of the plot/figure
@@ -110,6 +114,56 @@ begin
   var_I=(/(f1PD_I[:]->AREL)/)/((/(f1PD_I[:]->FREQL)/)+small) - (/(f1PI_I[:]->AREL)/)/((/(f1PI_I[:]->FREQL)/)+small)
  end if
   var_II=(/(f1PD_II[:]->AREL)/)/((/(f1PD_II[:]->FREQL)/)+small) - (/(f1PI_II[:]->AREL)/)/((/(f1PI_II[:]->FREQL)/)+small)
+else if (plot_type.eq.7) then
+ var="DST"                      ; name of plot
+ varname="Dust"                  ; variable name used in text string
+ plot_name="dDust_Zonal"          ; name of the plot/figure
+ if(ModI.eq."CAM4-Oslo") then
+  var_I=(/(f1PD_I[:]->DST_A2)/) + (/(f1PD_I[:]->DST_A3)/) - (/(f1PI_I[:]->DST_A2)/) - (/(f1PI_I[:]->DST_A3)/)
+ else
+  var_I=(/(f1PD_I[:]->DST_A2)/) + (/(f1PD_I[:]->DST_A3)/) + (/(f1PD_I[:]->DST_A2_OCW)/) + (/(f1PD_I[:]->DST_A3_OCW)/) - (/(f1PI_I[:]->DST_A2)/) - (/(f1PI_I[:]->DST_A3)/) - (/(f1PI_I[:]->DST_A2_OCW)/) - (/(f1PI_I[:]->DST_A3_OCW)/)
+ end if
+  var_II=(/(f1PD_II[:]->DST_A2)/) + (/(f1PD_II[:]->DST_A3)/) + (/(f1PD_II[:]->DST_A2_OCW)/) + (/(f1PD_II[:]->DST_A3_OCW)/) - (/(f1PI_II[:]->DST_A2)/) - (/(f1PI_II[:]->DST_A3)/) - (/(f1PI_II[:]->DST_A2_OCW)/) - (/(f1PI_II[:]->DST_A3_OCW)/)
+  var_I = var_I*1.e12
+  var_II = var_II*1.e12
+else if (plot_type.eq.8) then
+ var="BC"                      ; name of plot
+ varname="BC"                  ; variable name used in text string
+ plot_name="dBC_Zonal"          ; name of the plot/figure
+ if(ModI.eq."CAM4-Oslo") then
+  var_I=(/(f1PD_I[:]->BC_A)/) + (/(f1PD_I[:]->BC_AC)/) + (/(f1PD_I[:]->BC_AX)/) + (/(f1PD_I[:]->BC_AI)/) + (/(f1PD_I[:]->BC_NI)/) + (/(f1PD_I[:]->BC_N)/) - ( (/(f1PI_I[:]->BC_A)/) + (/(f1PI_I[:]->BC_AC)/) + (/(f1PI_I[:]->BC_AX)/) + (/(f1PI_I[:]->BC_AI)/) + (/(f1PI_I[:]->BC_NI)/) + (/(f1PI_I[:]->BC_N)/) )
+ else
+  var_I=(/(f1PD_I[:]->BC_A)/) + (/(f1PD_I[:]->BC_AC)/) + (/(f1PD_I[:]->BC_AX)/) + (/(f1PD_I[:]->BC_AI)/) + (/(f1PD_I[:]->BC_NI)/) + (/(f1PD_I[:]->BC_N)/) + (/(f1PD_I[:]->BC_A_OCW)/) + (/(f1PD_I[:]->BC_AC_OCW)/) + (/(f1PD_I[:]->BC_AI_OCW)/) + (/(f1PD_I[:]->BC_NI_OCW)/) + (/(f1PD_I[:]->BC_N_OCW)/) - ( (/(f1PI_I[:]->BC_A)/) + (/(f1PI_I[:]->BC_AC)/) + (/(f1PI_I[:]->BC_AX)/) + (/(f1PI_I[:]->BC_AI)/) + (/(f1PI_I[:]->BC_NI)/) + (/(f1PI_I[:]->BC_N)/) + (/(f1PI_I[:]->BC_A_OCW)/) + (/(f1PI_I[:]->BC_AC_OCW)/) + (/(f1PI_I[:]->BC_AI_OCW)/) + (/(f1PI_I[:]->BC_NI_OCW)/) + (/(f1PI_I[:]->BC_N_OCW)/) )
+ end if
+  var_II=(/(f1PD_II[:]->BC_A)/) + (/(f1PD_II[:]->BC_AC)/) + (/(f1PD_II[:]->BC_AX)/) + (/(f1PD_II[:]->BC_AI)/) + (/(f1PD_II[:]->BC_NI)/) + (/(f1PD_II[:]->BC_N)/) + (/(f1PD_II[:]->BC_A_OCW)/) + (/(f1PD_II[:]->BC_AC_OCW)/) + (/(f1PD_II[:]->BC_AI_OCW)/) + (/(f1PD_II[:]->BC_NI_OCW)/) + (/(f1PD_II[:]->BC_N_OCW)/) - ( (/(f1PI_II[:]->BC_A)/) + (/(f1PI_II[:]->BC_AC)/) + (/(f1PI_II[:]->BC_AX)/) + (/(f1PI_II[:]->BC_AI)/) + (/(f1PI_II[:]->BC_NI)/) + (/(f1PI_II[:]->BC_N)/) + (/(f1PI_II[:]->BC_A_OCW)/) + (/(f1PI_II[:]->BC_AC_OCW)/) + (/(f1PI_II[:]->BC_AI_OCW)/) + (/(f1PI_II[:]->BC_NI_OCW)/) + (/(f1PI_II[:]->BC_N_OCW)/) )
+  var_I = var_I*1.e12
+  var_II = var_II*1.e12
+else if (plot_type.eq.9) then
+ var="ICNC"                      ; name of plot
+ varname="ICNC"                  ; variable name used in text string
+ plot_name="dICNC_Zonal"          ; name of the plot/figure
+ if(ModI.eq."CAM4-Oslo") then
+  var_I = (/(f1PD_I[:]->CLOUD)/)*0.0
+ else
+  var_I = 1.e-6*(/(f1PD_I[:]->AWNI)/)/((/(f1PD_I[:]->FREQI)/)+small) - 1.e-6*(/(f1PI_I[:]->AWNI)/)/((/(f1PI_I[:]->FREQI)/)+small)
+ end if
+ var_II = 1.e-6*(/(f1PD_II[:]->AWNI)/)/((/(f1PD_II[:]->FREQI)/)+small) - 1.e-6*(/(f1PI_II[:]->AWNI)/)/((/(f1PI_II[:]->FREQI)/)+small)
+
+else if (plot_type.eq.10) then
+ var="SPREFFL"                      ; name of plot
+ varname="SPREFFL"                  ; variable name used in text string
+ plot_name="dSPREFFL_Zonal"          ; name of the plot/figure
+ if(ModI.eq."CAM4-Oslo") then
+  var_I=(/(f1PD_I[:]->REFFL)/)/((/(f1PD_I[:]->CLDFOC)/)+small) - (/(f1PI_I[:]->REFFL)/)/((/(f1PI_I[:]->CLDFOC)/)+small)
+ else
+  var_I=(/(f1PD_I[:]->AREL)/)/((/(f1PD_I[:]->FREQL)/)+small) - (/(f1PI_I[:]->AREL)/)/((/(f1PI_I[:]->FREQL)/)+small)
+ end if
+ var_II=(/(f1PD_II[:]->SPAREL)/)/((/(f1PD_II[:]->FREQL)/)+small) - (/(f1PD_II[:]->AREL)/)/((/(f1PD_II[:]->FREQL)/)+small)
+
+ end if
+ end if
+ end if
+ end if
  end if
  end if
  end if
@@ -152,16 +206,22 @@ if (var.eq."CLOUD") then
   digg=(/-1,-.5,-.1,0,0.1,0.5,1/)
    else if (var .eq. "CLDLIQ") then
     digg=(/-.1,0,0.1,0.5,1,2,3/)
+   else if (var .eq. "ICNC") then
+    digg=(/-20,-10,-5,-2,0,2,5,10,20/)*0.001
      else if (var .eq. "CLDICE") then
       digg=(/-0.2,-0.1,-0.05,0,0.05,0.1,0.2/)
        else if (var .eq. "CDNC") then
         digg=(/-.5,-0.1,0,0.1,0.5,1,2.5,5,10,15/)
-         else if (var .eq. "REFFL") then
+         else if (var .eq. "REFFL" .or. var .eq. "SPREFFL") then
           digg=(/-1,-.5,-.1,0,0.1,0.5,1/)
-         else
-          digg=(/0.0,1.0/)                         ; Replace with error message
+           else if (var .eq. "BC") then
+            digg=(/-1,0,1,2.5,5,10,25,50,100/)
+           else
+            digg= (/-1000,-500,-250,-100,0,100,250,500,1000,2500/) ; DST
+           end if
          end if
        end if
+      end if
       end if
     end if
   end if
@@ -293,6 +353,22 @@ else if (var .eq. "REFFL") then
 ;  res@tiMainString  = "REFFL (AREL) (~F33~m~F21~m)"
   res@tiMainString  = "REFFL (AREL/FREQL) (~F33~m~F21~m)"
  end if
+else if (var .eq. "SPREFFL") then
+ if(ModI.eq."CAM4-Oslo") then
+  res@tiMainString  = "REFFL (REFFL/CLDFOC) (~F33~m~F21~m)"
+ else
+  res@tiMainString  = "REFFL (AREL/FREQL) (~F33~m~F21~m)"
+ end if
+else if (var .eq. "ICNC") then
+  res@tiMainString  = "ICNC (AWNI/FREQI) (cm~S~-3~N~)"
+else if (var .eq. "DST") then
+  res@tiMainString  = "Dust (ng kg~S~-1~N~)"
+else if (var .eq. "BC") then
+  res@tiMainString  = "BC (ng kg~S~-1~N~)"
+end if
+end if
+end if
+end if
 end if
 end if
 end if
@@ -327,6 +403,22 @@ else if (var .eq. "CDNC") then
 else if (var .eq. "REFFL") then
 ;  res2@tiMainString  = "REFFL (AREL) (~F33~m~F21~m)"
   res2@tiMainString  = "REFFL (AREL/FREQL) (~F33~m~F21~m)"
+else if (var .eq. "SPREFFL") then
+ if(ModI.eq."CAM4-Oslo") then
+  res2@tiMainString  = "REFFL (REFFL/CLDFOC) (~F33~m~F21~m)"
+ else
+  res2@tiMainString  = "SP REFFL (SPAREL/FREQL) (~F33~m~F21~m)"
+ end if
+else if (var .eq. "ICNC") then
+  res2@tiMainString  = "ICNC (AWNI/FREQI) (cm~S~-3~N~)"
+else if (var .eq. "DST") then
+  res2@tiMainString  = "Dust (ng kg~S~-1~N~)"
+else if (var .eq. "BC") then
+  res2@tiMainString  = "BC (ng kg~S~-1~N~)"
+end if
+end if
+end if
+end if
 end if
 end if
 end if

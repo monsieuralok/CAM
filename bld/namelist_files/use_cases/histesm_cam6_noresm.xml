@@ -2,15 +2,6 @@
 
 <namelist_defaults>
 
-<!--bnd_topo hgrid="0.9x1.25">noresm-only/inputForNudging/ERA_f09f09_32L_days/ERA_bnd_topo.nc</bnd_topo-->
-<bnd_topo hgrid="0.9x1.25">/work/olivie/topography-era/ERA_bnd_topo_noresm2_20191023.nc</bnd_topo>
-<met_rlx_time>6</met_rlx_time>
-<met_nudge_only_uvps>.true.</met_nudge_only_uvps>
-<met_nudge_temp>.false.</met_nudge_temp>
-<met_srf_land>.false.</met_srf_land>
-<met_data_file dyn="fv"  hgrid="0.9x1.25">$INPUTDATA_ROOT/noresm-only/inputForNudging/ERA_f09f09_32L_days/2001-01-01.nc</met_data_file>
-<met_filenames_list dyn="fv"  hgrid="0.9x1.25">noresm-only/inputForNudging/ERA_f09f09_32L_days/fileList2001-2015.txt</met_filenames_list>
-
 <!--micro_do_sb_physics>   .true.   </micro_do_sb_physics-->
 <!--do_tms>                .false.  </do_tms-->
 <!--do_beljaars>           .true.   </do_beljaars-->
@@ -164,6 +155,16 @@
 <!--prescribed_strataero_file>' '</prescribed_strataero_file-->
 <prescribed_volcaero_datapath>atm/cam/volc</prescribed_volcaero_datapath>
 <prescribed_volcaero_file>CMIP_CAM6_radiation_v3_reformatted.nc</prescribed_volcaero_file>
-<rad_climate>'A:Q:H2O','N:O2:O2','N:CO2:CO2','N:ozone:O3','N:N2O:N2O','N:CH4:CH4','N:CFC11:CFC11','N:CFC12:CFC12'</rad_climate>
+
+<!-- Settings for NorESM CMIP6 emission driven HIST simulation-->
+<rad_climate>'A:Q:H2O','N:O2:O2','A:CO2:CO2','N:ozone:O3','N:N2O:N2O','N:CH4:CH4','N:CFC11:CFC11','N:CFC12:CFC12'</rad_climate>
+
+<aircraft_datapath>'atm/cam/ggas'</aircraft_datapath>
+<aircraft_specifier>'ac_CO2 -> ac_CO2_filelist_175001-201512_fv_1.9x2.5_c20181011.txt'</aircraft_specifier>
+<aircraft_type>'SERIAL'</aircraft_type>
+<co2_readflux_aircraft>.true.</co2_readflux_aircraft>
+<co2_readflux_fuel>.true.</co2_readflux_fuel>
+<co2flux_fuel_file>'/cluster/shared/noresm/inputdata/atm/cam/ggas/emissions-cmip6_CO2_anthro_surface_175001-201512_fv_1.9x2.5_c20181011.nc'</co2flux_fuel_file>
+
 
 </namelist_defaults>

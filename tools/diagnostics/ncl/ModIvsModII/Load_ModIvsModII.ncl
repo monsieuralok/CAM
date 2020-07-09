@@ -19,7 +19,8 @@ begin
 ; **** To be edited by the user if the ncl script is run interactively ****
 ; Define plot type and plot output format
  if (.not. isvar("plot_type")) then      ; is plot_type on command line?
-  plot_type = 6                      ; 0 => SO2 load
+  plot_type = 1                      ;-1 => DMS load
+                                     ; 0 => SO2 load
                                      ; 1 => SO4 load
                                      ; 2 => BC  load
                                      ; 3 => POM load
@@ -74,7 +75,16 @@ begin
  load_I=tmp_I
  load_II=tmp_II
 
- if (plot_type.eq.0) then
+ if (plot_type.eq.-1) then
+ var="C_DMS"              ; name of input-variable and plot
+ varname="DMS"            ; variable name used in text string:
+ if(ModI.eq."CAM4-Oslo") then
+   load_I=(/(f1_I[:]->C_DMS)/)*1.e6     ; variable to be plotted from I
+ else
+   load_I=(/(f1_I[:]->cb_DMS)/)*1.e6*32/62   ; variable to be plotted from I
+ end if
+ load_II=(/(f1_II[:]->cb_DMS)/)*1.e6*32/62   ; variable to be plotted from II
+ else if (plot_type.eq.0) then
  var="C_SO2"              ; name of input-variable and plot
  varname="SO2"            ; variable name used in text string:
  if(ModI.eq."CAM4-Oslo") then
@@ -262,6 +272,7 @@ begin
  end if
  end if
  end if
+ end if
 
 ; Calculating area weighted loads
 
@@ -288,8 +299,8 @@ begin
 if (var .eq. "C_SO2" .or.  var .eq. "C_SO4") then
  digg=(/0.1,0.2,0.3,0.5,1,2,3,5,10,20/)                      ; C_SO2 & C_SO4
 ; else if (var .eq. "C_BC") then
- else if (var .eq. "C_BC") then
-  digg=(/0.03,0.05,0.1,0.2,0.3,0.5,1,2,3,5/)                 ; C_BC
+ else if (var .eq. "C_BC" .or.  var .eq. "C_DMS") then
+  digg=(/0.03,0.05,0.1,0.2,0.3,0.5,1,2,3,5/)                 ; C_BC & C_DMS
   else if (var .eq. "C_POM" .or. var .eq. "C_SS") then
    digg=(/0.3,0.5,1,2,3,5,10,20,30,50/)                      ; C_POM & C_SS
    else if (var .eq. "C_DUST") then
@@ -356,7 +367,7 @@ else
 end if
 
 ;  res@tiMainString   = "ModI"
-if (var .eq. "C_SO2" .or.  var .eq. "C_SO4") then
+if (var .eq. "C_SO2" .or.  var .eq. "C_SO4" .or.  var .eq. "C_DMS") then
   res@gsnRightString   = "avg = "+sprintf("%4.2f",(sum(dim_avg_n(load_Ia,0))/area1))+" mg S m~S~-2~N~"
 else if (var .eq. "AKCXS") then
   res@gsnRightString  = "avg = "+sprintf("%6.4f",(sum(dim_avg_n(load_Ia,0))/area1))+" mg m~S~-2~N~"
@@ -375,7 +386,7 @@ end if
   plot(0) = gsn_csm_contour_map_ce(wks,dim_avg_n_Wrap(load_I,0),res)    ; create the plot
 
 ;  res@tiMainString   = "ModII"
-if (var .eq. "C_SO2" .or.  var .eq. "C_SO4") then
+if (var .eq. "C_SO2" .or.  var .eq. "C_SO4" .or.  var .eq. "C_DMS") then
   res@gsnRightString  = "avg = "+sprintf("%4.2f",(sum(dim_avg_n(load_IIa,0))/area1))+" mg S m~S~-2~N~"
 else if (var .eq. "AKCXS") then
   res@gsnRightString  = "avg = "+sprintf("%6.4f",(sum(dim_avg_n(load_IIa,0))/area1))+" mg m~S~-2~N~"

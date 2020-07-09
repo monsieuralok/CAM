@@ -209,7 +209,7 @@ for I in {1..6};do
 done
 
 echo ''
-echo 'Running SP-ERF_ModIvsModII.ncl'
+echo 'Running SP_ERF_ModIvsModII.ncl'
 echo ''
 for I in {0..5};do
 ncl  plot_type=$I format=\"$plotf\" filepathPD_I=\"$pthI\" filenamePD_I=\"$fnmI\" filepathPD_II=\"$pthII\" filenamePD_II=\"$fnmII\" filenamepPD_I=\"$fnmpI\" filenamepPD_II=\"$fnmpII\" filepathPI_I=\"$pthI_PI\" filenamePI_I=\"$fnmI_PI\" filepathPI_II=\"$pthII_PI\" filenamePI_II=\"$fnmII_PI\" filenamepPI_I=\"$fnmpI_PI\" filenamepPI_II=\"$fnmpII_PI\" ModI=\"$ModelI\" SP_ERF_ModIvsModII.ncl 

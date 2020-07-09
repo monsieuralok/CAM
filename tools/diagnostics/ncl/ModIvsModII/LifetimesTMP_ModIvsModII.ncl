@@ -94,7 +94,7 @@ if(GdepI .eq. "Neu") then
    netloss_I= -(/f1_I[:]->WD_A_SO2/)/1.998 \   ;kg/m2/sec (positive in output file)
               -(/f1_I[:]->DF_SO2/)/1.998 \     ;kg/m2/sec (positive in output file)  
               +(/f1_I[:]->AQ_SO2/)/1.998 \     ;kg/m2/ses (negative in output file)
-              +(/f1_I[:]->GS_SO2/)/1.998 - (/f1_I[:]->SO2_CMXF/)/1.998 + (/f1_I[:]->GS_DMS/)/1.938  ; net chemical loss (gas phase)
+              +(/f1_I[:]->GS_SO2/)/1.998 - (/f1_I[:]->SO2_XFRC_COL/)/1.998 + (/f1_I[:]->GS_DMS/)/1.938  ; net chemical loss (gas phase)
 else
    netloss_I= -(/f1_I[:]->WD_A_SO2/)/1.998 \   ;kg/m2/sec (positive in output file)
               -(/f1_I[:]->DF_SO2/)/1.998 \     ;kg/m2/sec (positive in output file)  

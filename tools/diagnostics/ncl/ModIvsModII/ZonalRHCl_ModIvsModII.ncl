@@ -29,6 +29,7 @@ begin
                                      ; 5 => CDNC    Cloud droplet number concentration
                                      ; 6 => REFFL   Cloud droplet effective radius
                                      ; 7 => ICNC    Ice crystal number concentration
+                                     ; 8 => REFFL vs SPREFFL Cloud droplet effective radius
 ; *************************************************************************
  end if
  if (.not. isvar("format")) then        ; is format on command line?
@@ -114,6 +115,19 @@ begin
   var_I=1.e-6*(/(f1_I[:]->AWNI)/)/((/(f1_I[:]->FREQI)/)+small)   ; variable to be plotted from II  
  end if
  var_II=1.e-6*(/(f1_II[:]->AWNI)/)/((/(f1_II[:]->FREQI)/)+small) ; variable to be plotted from II 
+
+ else if (plot_type.eq.8) then
+ var="SPREFFL"                      ; name of plot
+ varname="REFFL"                  ; variable name used in text string
+ plot_name="SPREFFL_Zonal"          ; name of the plot/figure
+ if(ModI.eq."CAM4-Oslo") then
+  var_I=(/(f1_I[:]->REFFL)/)/((/(f1_I[:]->CLDFOC)/)+small)  ; variable to be plotted from I
+ else
+  var_I=(/(f1_I[:]->AREL)/)/((/(f1_I[:]->FREQL)/)+small) ; variable to be plotted from II 
+ end if
+ var_II=(/(f1_II[:]->SPAREL)/)/((/(f1_II[:]->FREQL)/)+small) ; variable to be plotted from II 
+
+ end if
  end if
  end if
  end if
@@ -157,7 +171,7 @@ if (var.eq."CLOUD") then
       digg=(/0.01,0.1,0.2,0.3,0.5,1,2,3,5,10/)
        else if (var .eq. "CDNC") then
         digg=(/0.1,1,2,3,5,10,20,30,50,100/)
-         else if (var .eq. "REFFL") then
+         else if (var .eq. "REFFL" .or. var .eq. "SPREFFL") then
           digg=(/0.1,0.5,1,1.5,2,3,5,10,15,20/)
          else
            digg=(/0.0005,0.001,0.01,0.02,0.03,0.05,.1,.2,.3,.5/)
@@ -284,7 +298,7 @@ else if (var .eq. "CDNC") then
  else
   res@tiMainString  = "CDNC (AWNC/FREQL) (cm~S~-3~N~)"
  end if
-else if (var .eq. "REFFL") then
+else if (var .eq. "REFFL" .or. var .eq. "SPREFFL") then
  if(ModI.eq."CAM4-Oslo") then
   res@tiMainString  = "REFFL (REFFL/CLDFOC) (~F33~m~F21~m)"
  else
@@ -331,6 +345,9 @@ else if (var .eq. "REFFL") then
   res2@tiMainString  = "REFFL (AREL/FREQL) (~F33~m~F21~m)"
 else if (var .eq. "ICNC") then
   res2@tiMainString  = "ICNC (AWNI/FREQI) (cm~S~-3~N~)"
+else if (var .eq. "SPREFFL") then
+  res2@tiMainString  = "SP REFFL (SPAREL/FREQL) (~F33~m~F21~m)"
+end if
 end if
 end if
 end if

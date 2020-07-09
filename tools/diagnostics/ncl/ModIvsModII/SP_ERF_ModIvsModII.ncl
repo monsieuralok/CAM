@@ -4,9 +4,11 @@
 
 begin
 
-; This ncl script reads in radiative fluxes from two versions of NorESM / 
-; CAM-Oslo and makes global plots of the annually averaged flux differences 
-; (PD-PI), including global average as a number in the title line for each figure.
+; This ncl script reads in effective aerosol forcings/fluxes from two versions 
+; of NorESM / CAM-Oslo and makes global plots of the annually averaged forcings 
+; (ERF) including global average as a number in the title line for each figure.
+; Note: LW forcings/fluxes have been defined positive downwards, as for SW.
+; Hence, total forcing = SW + LW (instead of SW-LW).  
 
 ; Model independent constants
  g=9.80665
@@ -14,20 +16,19 @@ begin
  re=6378.39e3            ; earth radius in m
  coffa=pi*re^2./180.      
  area1=4.*pi*re^2          
- small=1.0e-15           ; small number
 
 ; *************************************************************************
 ; **** To be edited by the user if the ncl script is run interactively ****
 ;
 ; Define plot type and plot output format
  if (.not. isvar("plot_type")) then      ; is plot_type on command line?
-  plot_type = 3                      ; 1 => TOA SW + LW net flux imbalance
-                                     ; 2 => PD  SW cloud forcing at TOA 
-                                     ; 3 => PD  LW cloud forcing at TOA 
-                                     ; 4 => PD  SW surface albedo 
-                                     ; 5 => PD  SW clear-sky surface albedo 
-                                     ; 6 => PD-PI SW surface albedo 
-                                     ; 7 => PD-PI SW clear-sky surface albedo 
+  plot_type = 3                      ; 0 => TOA SW direct radiative forcing as ERF vs. SP-IRF
+                                     ; 1 => TOA SW Cloud radiative forcing as ERF  vs. SP-IRF
+                                     ; 2 => TOA SW Surface albedo forcing as ERF   + dn
+                                     ; 3 => TOA LW direct radiative forcing as ERF + dn also
+                                     ; 4 => TOA LW Cloud radiative forcing as ERF  + dn also
+                                     ; 5 => TOA LW Surface albedo forcing as ERF   + dn also
+                                     ; 6 => total TOA LW ERF (sum of 0 to 5)
   end if
  if (.not. isvar("format")) then        ; is format on command line?
   format = "ps"
@@ -66,42 +67,73 @@ begin
  forc_I=tmp_I
  forc_II=tmp_II
  
- if (plot_type.eq.1) then
- var="netfluximbalance"               ; name of input-variable and plot
- varname="PD net TOA flux imbalance"             ; variable name used in text string:
- forc_I=(/(f1PD_I[:]->FSNT)/)-(/(f1PD_I[:]->FLNT)/)  ; variable to be plotted from I
- forc_II=(/(f1PD_II[:]->FSNT)/)-(/(f1PD_II[:]->FLNT)/)  ; variable to be plotted from II
- else if (plot_type.eq.2) then
- var="SWCF"               ; name of input-variable and plot
- varname="PD SW cloud forcing at TOA (SWCF)"             ; variable name used in text string:
- forc_I=(/(f1PD_I[:]->SWCF)/)  ; variable to be plotted from I
- forc_II=(/(f1PD_II[:]->SWCF)/)  ; variable to be plotted from II
- else if (plot_type.eq.3) then
- var="LWCF"               ; name of input-variable and plot
- varname="PD LW cloud forcing at TOA (LWCF)"             ; variable name used in text string:
- forc_I=(/(f1PD_I[:]->LWCF)/)  ; variable to be plotted from I
- forc_II=(/(f1PD_II[:]->LWCF)/)  ; variable to be plotted from II
- else if (plot_type.eq.4) then
- var="SURFalb"               ; name of input-variable and plot
- varname="PD SW surface albedo"             ; variable name used in text string:
- forc_I=((/(f1PD_I[:]->FSDS)/)-(/(f1PD_I[:]->FSNS)/))/((/(f1PD_I[:]->FSDS)/)+small) ; variable to be plotted from I
- forc_II=((/(f1PD_II[:]->FSDS)/)-(/(f1PD_II[:]->FSNS)/))/((/(f1PD_II[:]->FSDS)/)+small)  ; variable to be plotted from II
- else if (plot_type.eq.5) then
- var="SURFalbcs"               ; name of input-variable and plot
- varname="PD SW clear-sky surface albedo"             ; variable name used in text string:
- forc_I=((/(f1PD_I[:]->FSDSC)/)-(/(f1PD_I[:]->FSNSC)/))/((/(f1PD_I[:]->FSDSC)/)+small) ; variable to be plotted from I
- forc_II=((/(f1PD_II[:]->FSDSC)/)-(/(f1PD_II[:]->FSNSC)/))/((/(f1PD_II[:]->FSDSC)/)+small)  ; variable to be plotted from II
- else if (plot_type.eq.6) then
- var="dSURFalb"               ; name of input-variable and plot
- varname="PD-PI SW surface albedo"             ; variable name used in text string:
- forc_I=((/(f1PD_I[:]->FSDS)/)-(/(f1PD_I[:]->FSNS)/))/((/(f1PD_I[:]->FSDS)/)+small) - ((/(f1PI_I[:]->FSDS)/)-(/(f1PI_I[:]->FSNS)/))/((/(f1PI_I[:]->FSDS)/)+small)
- forc_II=((/(f1PD_II[:]->FSDS)/)-(/(f1PD_II[:]->FSNS)/))/((/(f1PD_II[:]->FSDS)/)+small) - ((/(f1PI_II[:]->FSDS)/)-(/(f1PI_II[:]->FSNS)/))/((/(f1PI_II[:]->FSDS)/)+small)
- else if (plot_type.eq.7) then
- var="dSURFalbcs"               ; name of input-variable and plot
- varname="PD-PI SW cs surface albedo"             ; variable name used in text string:
- forc_I=((/(f1PD_I[:]->FSDSC)/)-(/(f1PD_I[:]->FSNSC)/))/((/(f1PD_I[:]->FSDSC)/)+small) - ((/(f1PI_I[:]->FSDSC)/)-(/(f1PI_I[:]->FSNSC)/))/((/(f1PI_I[:]->FSDSC)/)+small)
- forc_II=((/(f1PD_II[:]->FSDSC)/)-(/(f1PD_II[:]->FSNSC)/))/((/(f1PD_II[:]->FSDSC)/)+small) - ((/(f1PI_II[:]->FSDSC)/)-(/(f1PI_II[:]->FSNSC)/))/((/(f1PI_II[:]->FSDSC)/)+small)
+if (plot_type.eq.0) then
+ var="direct_ERF-SP"              ; name of plot
+ varname="SW direct radiative forcing at TOA"            ; variable name used in text string:
+ if(ModI.eq."CAM4-Oslo") then
+  forc_I=(/(f1PD_I[:]->FSNT_DRF)/)-(/(f1PI_I[:]->FSNT_DRF)/)     ; variable to be plotted from I
+ else
+  forc_I=(/(f1PD_I[:]->FSNT)/)-(/(f1PI_I[:]->FSNT)/)-((/(f1PD_I[:]->FSNT_DRF)/)-(/(f1PI_I[:]->FSNT_DRF)/))
  end if
+
+ forc_II=(/(f1PD_II[:]->FSNT_SP2)/)-(/(f1PD_II[:]->FSNT_SP)/)
+
+else if (plot_type.eq.1) then
+ var="cloud_ERF-SP"              ; name of input-variable and plot
+ varname="SW cloud radiative forcing at TOA"            ; variable name used in text string:
+ if(ModI.eq."CAM4-Oslo") then
+  forc_I=(/(f1PD_I[:]->FSNT_AIE)/)-(/(f1PI_I[:]->FSNT_AIE)/)     ; variable to be plotted from I
+ else
+  forc_I=(/(f1PD_I[:]->FSNT_DRF)/)-(/(f1PI_I[:]->FSNT_DRF)/)-((/(f1PD_I[:]->FSNTCDRF)/)-(/(f1PI_I[:]->FSNTCDRF)/))
+ end if
+
+ forc_II=(/(f1PD_II[:]->FSNT_SP3)/)-(/(f1PD_II[:]->FSNT_SP2)/)
+
+else if (plot_type.eq.2) then
+ var="direct_ERF-SPsurf"              ; name of plot
+ varname="SW Direct radiative forcing at surface"            ; variable name used in text string:
+ if(ModI.eq."CAM4-Oslo") then
+  forc_I=(/(f1PD_I[:]->FSNS_DRF)/)-(/(f1PI_I[:]->FSNS_DRF)/)     ; variable to be plotted from I
+ else
+  forc_I=(/(f1PD_I[:]->FSNS)/)-(/(f1PI_I[:]->FSNS)/)-((/(f1PD_I[:]->FSNS_DRF)/)-(/(f1PI_I[:]->FSNS_DRF)/))
+ end if
+
+forc_II=(/(f1PD_II[:]->FSNS_SP2)/)-(/(f1PD_II[:]->FSNS_SP)/) 
+
+else if (plot_type.eq.3) then
+ var="cloud_ERFsurf-SP"              ; name of input-variable and plot
+ varname="SW cloud radiative forcing at surface"            ; variable name used in text string:
+ if(ModI.eq."CAM4-Oslo") then
+  forc_I=(/(f1PD_I[:]->FSNS_AIE)/)-(/(f1PI_I[:]->FSNS_AIE)/)     ; variable to be plotted from I
+ else
+  forc_I=(/(f1PD_I[:]->FSNS_DRF)/)-(/(f1PI_I[:]->FSNS_DRF)/)-((/(f1PD_I[:]->FSNSCDRF)/)-(/(f1PI_I[:]->FSNSCDRF)/))
+ end if
+
+forc_II=(/(f1PD_II[:]->FSNS_SP3)/)-(/(f1PD_II[:]->FSNS_SP2)/)
+
+else if (plot_type.eq.4) then
+ var="total_ERF-SP"              ; name of input-variable and plot
+ varname="Total forcing at TOA"            ; variable name used in text string:
+ if(ModI.eq."CAM4-Oslo") then
+  forc_I=(/(f1PD_I[:]->FSNT_DRF)/)-(/(f1PI_I[:]->FSNT_DRF)/) + (/(f1PD_I[:]->FSNT_AIE)/)-(/(f1PI_I[:]->FSNT_AIE)/)
+ else
+  forc_I=(/(f1PD_I[:]->FSNT)/)-(/(f1PI_I[:]->FSNT)/)-((/(f1PD_I[:]->FSNTCDRF)/)-(/(f1PI_I[:]->FSNTCDRF)/))
+ end if
+
+ forc_II=(/(f1PD_II[:]->FSNT_SP3)/)-(/(f1PD_II[:]->FSNT_SP)/)
+
+else if (plot_type.eq.5) then
+ var="total_ERFsurf-SP"              ; name of input-variable and plot
+ varname="Total forcing at surface"            ; variable name used in text string:
+
+ if(ModI.eq."CAM4-Oslo") then
+  forc_I=(/(f1PD_I[:]->FSNS_DRF)/)-(/(f1PI_I[:]->FSNS_DRF)/) + (/(f1PD_I[:]->FSNS_AIE)/)-(/(f1PI_I[:]->FSNS_AIE)/)
+ else
+  forc_I=(/(f1PD_I[:]->FSNS)/)-(/(f1PI_I[:]->FSNS)/)-((/(f1PD_I[:]->FSNSCDRF)/)-(/(f1PI_I[:]->FSNSCDRF)/))
+ end if
+
+ forc_II=(/(f1PD_II[:]->FSNS_SP3)/)-(/(f1PD_II[:]->FSNS_SP)/) 
+
  end if
  end if
  end if
@@ -131,21 +163,29 @@ begin
  end do
 
 ; Defining color scales for each forcing variable
- if (var .eq. "netfluximbalance") then
-   digg=(/-100,-50,-25,-10,-5,5,10,25,50,100/)
- else if (var .eq. "SWCF") then
-   digg=(/-150,-100,-75,-50,-30,-20,-15,-10,-5,0/)
- else if (var .eq. "LWCF") then
-   digg=(/-5,0,5,10,15,20,30,50,75,100/)
- else if (var .eq. "SURFalb" .or. var .eq. "SURFalbcs") then
-   digg=(/0.05,0.1,0.15,0.2,0.3,0.4,0.5,0.6,0.7,0.8/)                       
- else 
-   digg=(/-.2,-.1,-.05,-.025,-.01,.0,.01,.025,.05,.1,.2/)
+if (var .eq. "direct_ERF-SP") then
+ digg=(/-2,-1,-0.5,-0.25,-0.1,0,0.1,0.25,0.5,1,2/)
+ else if (var .eq. "cloud_ERF-SP" .or. var .eq. "direct_ERF-SPsurf" .or. var .eq. "cloud_ERFsurf-SP" .or. var .eq. "total_ERF-SP" .or. var .eq. "total_ERFsurf-SP") then
+  digg=(/-10,-5,-3,-1,-0.5,0,0.5,1,3,5,10/)
+  else if (var .eq. "surfalb_ERF") then
+   digg=(/-2,-1,-0.5,-0.25,-0.1,0,0.1,0.25,0.5,1,2/)
+   else if (var .eq. "direct_ERF_LW") then
+    digg=(/0.005,0.01,0.02,0.03,0.05,0.07,0.1,0,0.15/)
+;    digg=(/-2,-1,-0.5,-0.25,-0.1,0,0.1,0.25,0.5,1,2/)
+    else if (var .eq. "cloud_ERF_LW") then
+;     digg=(/-2,-1,-0.5,-0.25,-0.1,0,0.1,0.25,0.5,1,2/)
+     digg=(/-10,-5,-3,-1,-0.5,0,0.5,1,3,5,10/)
+      else if (var .eq. "surfalb_ERF_LW") then
+;      digg=(/-2,-1,-0.5,-0.25,-0.1,0,0.1,0.25,0.5,1,2/)
+      digg=(/-10,-5,-3,-1,-0.5,0,0.5,1,3,5/)
+       else
+       digg=(/0.0,1.0/)                         ; Replace with error message
+       end if
+    end if
+   end if
+  end if
  end if
- end if
- end if
- end if
-
+end if
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -192,20 +232,12 @@ begin
   res@cnLevels       =   sprintf("%5.3f",digg)             ; min level
 
 ;  res@tiMainString   = "CAM4-Oslo"
- if (plot_type.ge.4) then
-  res@gsnRightString   = "avg = "+sprintf("%5.3f",(sum(dim_avg_n(forc_Ia,0))/area1))
- else
   res@gsnRightString   = "avg = "+sprintf("%5.3f",(sum(dim_avg_n(forc_Ia,0))/area1))+" W m~S~-2~N~"
- end if
-res@gsnLeftString   = varname
+  res@gsnLeftString   = varname
   plot(0) = gsn_csm_contour_map_ce(wks,dim_avg_n_Wrap(forc_I,0),res)    ; create the plot
 
 ;  res@tiMainString   = "CAM5-Oslo"
- if (plot_type.ge.4) then
-  res@gsnRightString   = "avg = "+sprintf("%5.3f",(sum(dim_avg_n(forc_Ia,0))/area1))
- else
   res@gsnRightString  = "avg = "+sprintf("%5.3f",(sum(dim_avg_n(forc_IIa,0))/area1))+" W m~S~-2~N~"
- end if
   res@gsnLeftString   = varname
   plot(1) = gsn_csm_contour_map_ce(wks,dim_avg_n_Wrap(forc_II,0),res)   ; create the plot
 

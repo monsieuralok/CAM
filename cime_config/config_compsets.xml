@@ -194,8 +194,68 @@
   </compset>
 
   <compset>
+    <alias>NFHISTnorpibc_aeronly</alias>
+    <lname>1850_CAM60%NORESM%NORPIBC%AERONLY_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFHISTnorpibc_oxidonly</alias>
+    <lname>1850_CAM60%NORESM%NORPIBC%OXIDONLY_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
     <alias>NFHISTnorpibc_ozoneonly</alias>
     <lname>1850_CAM60%NORESM%NORPIBC%OZONEONLY_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFHISTnorpibc_luonly</alias>
+    <lname>1850_CAM60%NORESM%NORPIBC%LUONLY_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFSSP370frc2norbc</alias>
+    <lname>SSP370_CAM60%NORESM%NORBC%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFSSP370frc2norbc_aerlow</alias>
+    <lname>SSP370_CAM60%NORESM%NORBC%AERLOW%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFSSP245frc2norpibc</alias>
+    <lname>SSP245_CAM60%NORESM%NORPIBC%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFSSP245frc2norpibc_ghgonly</alias>
+    <lname>SSP245_CAM60%NORESM%NORPIBC%GHGONLY%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFSSP245frc2norpibc_natonly</alias>
+    <lname>SSP245_CAM60%NORESM%NORPIBC%NATONLY%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFSSP245frc2norpibc_aeronly</alias>
+    <lname>SSP245_CAM60%NORESM%NORPIBC%AERONLY%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NFSSP245frc2norpibc_aeroxidonly</alias>
+    <lname>SSP245_CAM60%NORESM%NORPIBC%AEROXIDONLY%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
     <science_support grid="f19_f19"/>
   </compset>
 
@@ -209,15 +269,25 @@
   <compset>
     <alias>NF1850norbc</alias>
     <lname>1850_CAM60%NORESM%NORBC_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
-    <science_support grid="f09_f09"/>
     <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NF1850frc2norbc</alias>
+    <lname>1850_CAM60%NORESM%NORBC%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f09_f09"/>
   </compset>
 
   <compset>
     <alias>NF1850norbc_4xco2</alias>
     <lname>1850_CAM60%NORESM%NORBC%4xCO2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
-    <science_support grid="f09_f09"/>
     <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NF1850frc2norbc_4xco2</alias>
+    <lname>1850_CAM60%NORESM%NORBC%FRC2%4xCO2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f09_f09"/>
   </compset>
 
   <compset>
@@ -235,6 +305,12 @@
   <compset>
     <alias>NF1850norbc_ghgnoh2o2014</alias>
     <lname>1850_CAM60%NORESM%NORBC%GHGNOH2O2014_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NF1850norbc_co22014</alias>
+    <lname>1850_CAM60%NORESM%NORBC%CO22014_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
     <science_support grid="f19_f19"/>
   </compset>
 
@@ -277,15 +353,25 @@
   <compset>
     <alias>NF1850norbc_aer2014</alias>
     <lname>1850_CAM60%NORESM%NORBC%AER2014_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
-    <science_support grid="f09_f09"/>
     <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NF1850frc2norbc_aer2014</alias>
+    <lname>1850_CAM60%NORESM%NORBC%AER2014%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f09_f09"/>
   </compset>
 
   <compset>
     <alias>NF1850norbc_aeroxid2014</alias>
     <lname>1850_CAM60%NORESM%NORBC%AEROXID2014_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
-    <science_support grid="f09_f09"/>
     <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NF1850frc2norbc_aeroxid2014</alias>
+    <lname>1850_CAM60%NORESM%NORBC%AEROXID2014%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f09_f09"/>
   </compset>
 
   <compset>
@@ -327,8 +413,13 @@
   <compset>
     <alias>NF1850norbc_oxid2014</alias>
     <lname>1850_CAM60%NORESM%NORBC%OXID2014_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
-    <science_support grid="f09_f09"/>
     <science_support grid="f19_f19"/>
+  </compset>
+
+  <compset>
+    <alias>NF1850frc2norbc_oxid2014</alias>
+    <lname>1850_CAM60%NORESM%NORBC%OXID2014%FRC2_CLM50%BGC-CROP_CICE%PRES_DOCN%DOM_MOSART_SGLC_SWAV</lname>
+    <science_support grid="f09_f09"/>
   </compset>
 
   <!-- CAM simpler model compsets -->
@@ -690,36 +781,46 @@
 
     <entry id="ATM_DOMAIN_FILE">
       <values match="last">
-        <value  compset="%NORESM%NORBC" grid="1.9x2.5">domain.lnd.fv1.9x2.5_tnx1v4.170609.nc</value>
-        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5">domain.lnd.fv1.9x2.5_tnx1v4.170609.nc</value>
+        <value  compset="%NORESM%NORBC" grid="0.9x1.25">domain.lnd.fv0.9x1.25_tnx1v4.170609.nc</value>
+        <value  compset="%NORESM%NORBC" grid="1.9x2.5" >domain.lnd.fv1.9x2.5_tnx1v4.170609.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="0.9x1.25">domain.lnd.fv0.9x1.25_tnx1v4.170609.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5" >domain.lnd.fv1.9x2.5_tnx1v4.170609.nc</value>
       </values>
     </entry>    
 
     <entry id="LND_DOMAIN_FILE">
       <values match="last">
-        <value  compset="%NORESM%NORBC" grid="1.9x2.5">domain.lnd.fv1.9x2.5_tnx1v4.170609.nc</value>
-        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5">domain.lnd.fv1.9x2.5_tnx1v4.170609.nc</value>
+        <value  compset="%NORESM%NORBC" grid="0.9x1.25">domain.lnd.fv0.9x1.25_tnx1v4.170609.nc</value>
+        <value  compset="%NORESM%NORBC" grid="1.9x2.5" >domain.lnd.fv1.9x2.5_tnx1v4.170609.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="0.9x1.25">domain.lnd.fv0.9x1.25_tnx1v4.170609.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5" >domain.lnd.fv1.9x2.5_tnx1v4.170609.nc</value>
       </values>
     </entry>    
 
     <entry id="ICE_DOMAIN_FILE">
       <values match="last">
-        <value  compset="%NORESM%NORBC" grid="1.9x2.5">domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
-        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5">domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORBC" grid="0.9x1.25">domain.ocn.fv0.9x1.25_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORBC" grid="1.9x2.5" >domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="0.9x1.25">domain.ocn.fv0.9x1.25_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5" >domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
       </values>
     </entry>    
 
     <entry id="OCN_DOMAIN_FILE">
       <values match="last">
-        <value  compset="%NORESM%NORBC" grid="1.9x2.5">domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
-        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5">domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORBC" grid="0.9x1.25">domain.ocn.fv0.9x1.25_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORBC" grid="1.9x2.5" >domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="0.9x1.25">domain.ocn.fv0.9x1.25_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5" >domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
       </values>
     </entry>    
 
     <entry id="SSTICE_GRID_FILENAME">
       <values match="last">
-        <value  compset="%NORESM%NORBC" grid="1.9x2.5">$DIN_LOC_ROOT/atm/cam/ocnfrac/domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
-        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5">$DIN_LOC_ROOT/atm/cam/ocnfrac/domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORBC" grid="0.9x1.25">$DIN_LOC_ROOT/atm/cam/ocnfrac/domain.ocn.fv0.9x1.25_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORBC" grid="1.9x2.5" >$DIN_LOC_ROOT/atm/cam/ocnfrac/domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="0.9x1.25">$DIN_LOC_ROOT/atm/cam/ocnfrac/domain.ocn.fv0.9x1.25_tnx1v4.170609_djlo.nc</value>
+        <value  compset="%NORESM%NORPIBC" grid="1.9x2.5" >$DIN_LOC_ROOT/atm/cam/ocnfrac/domain.ocn.fv1.9x2.5_tnx1v4.170609_djlo.nc</value>
       </values>
     </entry>    
 
@@ -787,6 +888,7 @@
 
        <!-- fSST : evolving NorESM derived -->
        <value compset="HIST_CAM60%NORESM%NORBC"     grid=".+"                >$DIN_LOC_ROOT/noresm-only/atm/cam/sst/fice-micom-divocn_sst-micom-dow_NHIST_f19_tn14_20190625_1849-2015_series_version20190726_ts.nc</value>
+       <value compset="SSP370_CAM60%NORESM%NORBC"   grid=".+"                >$DIN_LOC_ROOT/noresm-only/atm/cam/sst/fice-micom-divocn_sst-micom-dow_NSSP370frc2_f19_tn14_20191014_2014-2101_series_version20200109_ts.nc</value>
 
         <value compset="1850_" grid=".+"                                     >$DIN_LOC_ROOT/atm/cam/sst/sst_HadOIBl_bc_1x1_clim_pi_c101029.nc</value>
         <value compset="1850_"         grid="a%T31.*_oi%T31"                 >$DIN_LOC_ROOT/atm/cam/sst/sst_HadOIBl_bc_48x96_clim_pi_c101028.nc</value>
@@ -796,8 +898,10 @@
         <value compset="1850_"         grid="a%0.23x0.31.*_oi%0.23x0.31"     >$DIN_LOC_ROOT/atm/cam/sst/sst_HadOIBl_bc_0.23x0.31_clim_pi_c101028.nc</value>
        
         <!-- fSST : constant preindustrial NorESM derived -->
-        <value compset="1850_CAM60%NORESM%NORBC"   grid=".+"                 >$DIN_LOC_ROOT/noresm-only/atm/cam/sst/fice-micom-divocn_sst-micom-dow_N1850_f19_tn14_20190621_1751-1780_series_version20190726_clim.nc</value>
-        <value compset="CAM60%NORESM%NORPIBC"      grid=".+"                 >$DIN_LOC_ROOT/noresm-only/atm/cam/sst/fice-micom-divocn_sst-micom-dow_N1850_f19_tn14_20190621_1751-1780_series_version20190726_clim.nc</value>
+        <value compset="1850_CAM60%NORESM%NORBC"   grid="a%0.9x1.25"         >$DIN_LOC_ROOT/noresm-only/atm/cam/sst/fice-micom-divocn_sst-micom-dow_N1850frc2_f09_tn14_20191012_1351-1380_series_version20200106_clim.nc</value>
+        <value compset="1850_CAM60%NORESM%NORBC"   grid="a%1.9x2.5"          >$DIN_LOC_ROOT/noresm-only/atm/cam/sst/fice-micom-divocn_sst-micom-dow_N1850_f19_tn14_20190621_1751-1780_series_version20190726_clim.nc</value>
+        <value compset="CAM60%NORESM%NORPIBC"      grid="a%0.9x1.25"         >$DIN_LOC_ROOT/noresm-only/atm/cam/sst/fice-micom-divocn_sst-micom-dow_N1850frc2_f09_tn14_20191012_1351-1380_series_version20200106_clim.nc</value>
+        <value compset="CAM60%NORESM%NORPIBC"      grid="a%1.9x2.5"          >$DIN_LOC_ROOT/noresm-only/atm/cam/sst/fice-micom-divocn_sst-micom-dow_N1850_f19_tn14_20190621_1751-1780_series_version20190726_clim.nc</value>
 
         <value compset="2000"          grid=".+"                             >$DIN_LOC_ROOT/atm/cam/sst/sst_HadOIBl_bc_1x1_2000climo_c180511.nc</value>
         <value compset="2000"          grid="a%T31.*_oi%T31"                 >$DIN_LOC_ROOT/atm/cam/sst/sst_HadOIBl_bc_48x96_2000climo_c180511.nc</value>

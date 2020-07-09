@@ -81,7 +81,7 @@ begin
  if(ModI.eq."CAM4-Oslo") then
    load_I=(/(f1_I[:]->EMI_SO2)/)*1.e12     ; variable to be plotted from I
  else
-   load_I=(/(f1_I[:]->SFSO2)/)/1.998 + (/(f1_I[:]->SO2_CMXF)/)/1.998  ; variable to be plotted from I
+   load_I=(/(f1_I[:]->SFSO2)/)/1.998 + (/(f1_I[:]->SO2_XFRC_COL)/)/1.998  ; variable to be plotted from I
    load_I = load_I*1.e12
  end if
  load_II=(/(f1_II[:]->SFSO2)/)/1.998 + (/(f1_II[:]->SO2_CMXF)/)/1.998  ; variable to be plotted from II
@@ -92,7 +92,7 @@ begin
  if(ModI.eq."CAM4-Oslo") then
    load_I=(/(f1_I[:]->EMI_SO4)/)*1.e12     ; variable to be plotted from I
  else
-   load_I=(/(f1_I[:]->SFSO4_A1)/)/3.06 + (/(f1_I[:]->SFSO4_A2)/)/3.59 + (/(f1_I[:]->SFSO4_AC)/)/3.06  + (/(f1_I[:]->SFSO4_NA)/)/3.06 + (/(f1_I[:]->SFSO4_PR)/)/3.06 + (/(f1_I[:]->SO4_PR_CMXF)/)/3.06
+   load_I=(/(f1_I[:]->SFSO4_A1)/)/3.06 + (/(f1_I[:]->SFSO4_A2)/)/3.59 + (/(f1_I[:]->SFSO4_AC)/)/3.06  + (/(f1_I[:]->SFSO4_NA)/)/3.06 + (/(f1_I[:]->SFSO4_PR)/)/3.06 + (/(f1_I[:]->SO4_PR_XFRC_COL)/)/3.06
    load_I = load_I*1.e12
  end if 
  load_II=(/(f1_II[:]->SFSO4_A1)/)/3.06 + (/(f1_II[:]->SFSO4_A2)/)/3.59 + (/(f1_II[:]->SFSO4_AC)/)/3.06  + (/(f1_II[:]->SFSO4_NA)/)/3.06 + (/(f1_II[:]->SFSO4_PR)/)/3.06 + (/(f1_II[:]->SO4_PR_CMXF)/)/3.06
@@ -103,7 +103,7 @@ begin
  if(ModI.eq."CAM4-Oslo") then
    load_I=(/(f1_I[:]->EMI_BC)/)*1.e12     ; variable to be plotted from I
  else
-   load_I=(/(f1_I[:]->SFBC_A)/) + (/(f1_I[:]->SFBC_AC)/) + (/(f1_I[:]->SFBC_AX)/) + (/(f1_I[:]->SFBC_AI)/) + (/(f1_I[:]->SFBC_NI)/) + (/(f1_I[:]->SFBC_N)/) + (/(f1_I[:]->BC_AX_CMXF)/) + (/(f1_I[:]->BC_NI_CMXF)/) + (/(f1_I[:]->BC_N_CMXF)/)
+   load_I=(/(f1_I[:]->SFBC_A)/) + (/(f1_I[:]->SFBC_AC)/) + (/(f1_I[:]->SFBC_AX)/) + (/(f1_I[:]->SFBC_AI)/) + (/(f1_I[:]->SFBC_NI)/) + (/(f1_I[:]->SFBC_N)/) + (/(f1_I[:]->BC_AX_XFRC_COL)/) + (/(f1_I[:]->BC_NI_XFRC_COL)/) + (/(f1_I[:]->BC_N_XFRC_COL)/)
    load_I = load_I*1.e12
  end if
  load_II=(/(f1_II[:]->SFBC_A)/) + (/(f1_II[:]->SFBC_AC)/) + (/(f1_II[:]->SFBC_AX)/) + (/(f1_II[:]->SFBC_AI)/) + (/(f1_II[:]->SFBC_NI)/) + (/(f1_II[:]->SFBC_N)/) + (/(f1_II[:]->BC_AX_CMXF)/) + (/(f1_II[:]->BC_NI_CMXF)/) + (/(f1_II[:]->BC_N_CMXF)/)
@@ -114,7 +114,7 @@ begin
  if(ModI.eq."CAM4-Oslo") then
    load_I=(/(f1_I[:]->EMI_POM)/)*1.e12    ; variable to be plotted from I
  else
-   load_I=(/(f1_I[:]->SFOM_AI)/) + (/(f1_I[:]->SFOM_AC)/) + (/(f1_I[:]->SFOM_NI)/) +  (/(f1_I[:]->OM_NI_CMXF)/)
+   load_I=(/(f1_I[:]->SFOM_AI)/) + (/(f1_I[:]->SFOM_AC)/) + (/(f1_I[:]->SFOM_NI)/) +  (/(f1_I[:]->OM_NI_XFRC_COL)/)
    load_I = load_I*1.e12
  end if
  load_II=(/(f1_II[:]->SFOM_AI)/) + (/(f1_II[:]->SFOM_AC)/) + (/(f1_II[:]->SFOM_NI)/) +  (/(f1_II[:]->OM_NI_CMXF)/)

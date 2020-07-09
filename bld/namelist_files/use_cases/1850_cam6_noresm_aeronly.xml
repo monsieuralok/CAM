@@ -2,44 +2,36 @@
 
 <namelist_defaults>
 
-<!--bnd_topo hgrid="0.9x1.25">noresm-only/inputForNudging/ERA_f09f09_32L_days/ERA_bnd_topo.nc</bnd_topo-->
-<bnd_topo hgrid="0.9x1.25">/work/olivie/topography-era/ERA_bnd_topo_noresm2_20191023.nc</bnd_topo>
-<met_rlx_time>6</met_rlx_time>
-<met_nudge_only_uvps>.true.</met_nudge_only_uvps>
-<met_nudge_temp>.false.</met_nudge_temp>
-<met_srf_land>.false.</met_srf_land>
-<met_data_file dyn="fv"  hgrid="0.9x1.25">$INPUTDATA_ROOT/noresm-only/inputForNudging/ERA_f09f09_32L_days/2001-01-01.nc</met_data_file>
-<met_filenames_list dyn="fv"  hgrid="0.9x1.25">noresm-only/inputForNudging/ERA_f09f09_32L_days/fileList2001-2015.txt</met_filenames_list>
-
 <!--micro_do_sb_physics>   .true.   </micro_do_sb_physics-->
 <!--do_tms>                .false.  </do_tms-->
 <!--do_beljaars>           .true.   </do_beljaars-->
 
 <!-- Solar constant -->
-<!--solar_data_file          >   'atm/cam/solar/SolarForcingCMIP6_18500101-22991231_c160830.nc'    </solar_data_file-->
-<solar_irrad_data_file    >   'atm/cam/solar/SolarForcingCMIP6_18491230-22991231_c171031.nc'</solar_irrad_data_file>
+<solar_irrad_data_file     >   'atm/cam/solar/SolarForcingCMIP6piControl_c160921.nc'   </solar_irrad_data_file>
+<solar_data_ymd      >   18500101                                                </solar_data_ymd>
+<solar_data_type     >    FIXED                                                  </solar_data_type>
 
-<!-- GHG values -->
-<scenario_ghg            >    'CHEM_LBC_FILE'   </scenario_ghg>
- <!-- use waccm LBC file -->  
-<flbc_file>atm/waccm/lb/LBC_1750-2015_CMIP6_GlobAnnAvg_c180926.nc</flbc_file>
-<flbc_type>'SERIAL'</flbc_type>
-<flbc_list>'CO2','CH4','N2O','CFC11eq','CFC12'</flbc_list>
-  <!--scenario_ghg            >    RAMPED                                       </scenario_ghg-->
-  <!--bndtvghg                >    atm/cam/ggas/ghg_hist_1765-2005_c091218.nc   </bndtvghg-->
+<!-- 1850 GHG values Taken from Meinshausen et al., 2017 -->
+<co2vmr>   284.32e-6  </co2vmr>
+<ch4vmr>   808.25e-9  </ch4vmr>
+<n2ovmr>   273.02e-9  </n2ovmr>
+<f11vmr>   32.11e-12  </f11vmr>
+<f12vmr>   0.0        </f12vmr>
 
-<!-- ozone data -->
-<prescribed_ozone_datapath>   'atm/cam/ozone_strataero'                                          </prescribed_ozone_datapath>
-<prescribed_ozone_file    >   'ozone_strataero_WACCM_L70_zm5day_18500101-20150103_CMIP6ensAvg_c180923.nc'   </prescribed_ozone_file>
-<prescribed_ozone_name    >   'O3'                                                      </prescribed_ozone_name>
-<prescribed_ozone_type    >   'SERIAL'                                                  </prescribed_ozone_type>
+<!-- 1850 ozone data -->
+<prescribed_ozone_cycle_yr>   1850                                                          </prescribed_ozone_cycle_yr>
+<prescribed_ozone_datapath>   'atm/cam/ozone_strataero'                                     </prescribed_ozone_datapath>
+<prescribed_ozone_file    >   'ozone_strataero_cyclical_WACCM6_L70_CMIP6-piControl.001_y21-50avg_zm_5day_c180802.nc'  </prescribed_ozone_file>
+<prescribed_ozone_name    >   'O3'                                                          </prescribed_ozone_name>
+<prescribed_ozone_type    >   'CYCLICAL'                                                    </prescribed_ozone_type>
 
 <!-- Prescribed oxidants for aerosol chemistry -->
-<tracer_cnst_datapath     >   'atm/cam/tracer_cnst'                                          </tracer_cnst_datapath>
-<tracer_cnst_file         >   'tracer_cnst_halons_3D_L70_1849-2015_CMIP6ensAvg_c180927.nc'    </tracer_cnst_file>
-<tracer_cnst_specifier    >   'O3','OH','NO3','HO2'                                     </tracer_cnst_specifier>
-<tracer_cnst_type         >   'INTERP_MISSING_MONTHS'                                                  </tracer_cnst_type>
-<tracer_cnst_filelist     >   ''                                                        </tracer_cnst_filelist>
+<tracer_cnst_cycle_yr >   1850                                                             </tracer_cnst_cycle_yr>
+<tracer_cnst_datapath >   'atm/cam/tracer_cnst'                                            </tracer_cnst_datapath>
+<tracer_cnst_file     >   'tracer_cnst_WACCM6_halons_3DmonthlyL70_1850climoCMIP6piControl001_y21-50avg_c180802.nc' </tracer_cnst_file>
+<tracer_cnst_specifier>   'O3','OH','NO3','HO2'                                            </tracer_cnst_specifier>
+<tracer_cnst_type     >   'CYCLICAL'                                                       </tracer_cnst_type>
+<tracer_cnst_filelist >   ''                                                               </tracer_cnst_filelist>
 
 <!-- Surface emissions for  MAMOslo -->
 <srf_emis_type            >    INTERP_MISSING_MONTHS  </srf_emis_type>
@@ -65,7 +57,7 @@
 
 <!-- 3D emissions -->
 <ext_frc_specifier hgrid="0.9x1.25">
-  'H2O    ->  $INPUTDATA_ROOT/atm/cam/chem/emis/elev/H2OemissionCH4oxidationx2_3D_L70_1849-2015_CMIP6ensAvg_c180927.nc',
+  'H2O    ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/perturbations/H2O_emission_CH4_oxidationx2_elev_3DmonthlyL70_1850climoCMIP6piControl001_y21-50avg_date_0000_5000_c180802.nc',
   'BC_AX  ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/emissions_cmip6_noresm2_BC_AX_airALL_vertical_1849-2015_0.9x1.25_version20180512.nc',
   'BC_AX  ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/emissions_cmip6_noresm2_BC_AX_anthroprofALL_vertical_1849-2015_0.9x1.25_version20180512.nc',
   'BC_N   ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/emissions_cmip6_noresm2_BC_N_airALL_vertical_1849-2015_0.9x1.25_version20180512.nc',
@@ -84,7 +76,7 @@
   'SO4_PR ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/emissions_cmip6_noresm2_SO4_PR_volcALL_vertical_1849-2015_0.9x1.25_version20180512.nc'
 </ext_frc_specifier>
 <ext_frc_specifier hgrid="1.9x2.5">
-  'H2O    ->  $INPUTDATA_ROOT/atm/cam/chem/emis/elev/H2OemissionCH4oxidationx2_3D_L70_1849-2015_CMIP6ensAvg_c180927.nc',
+  'H2O    ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/perturbations/H2O_emission_CH4_oxidationx2_elev_3DmonthlyL70_1850climoCMIP6piControl001_y21-50avg_date_0000_5000_c180802.nc',
   'BC_AX  ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/emissions_cmip6_noresm2_BC_AX_airALL_vertical_1849-2015_1.9x2.5_version20180512.nc',
   'BC_AX  ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/emissions_cmip6_noresm2_BC_AX_anthroprofALL_vertical_1849-2015_1.9x2.5_version20180512.nc',
   'BC_N   ->  $INPUTDATA_ROOT/atm/cam/chem/emis/cmip6_emissions_version20180512/emissions_cmip6_noresm2_BC_N_airALL_vertical_1849-2015_1.9x2.5_version20180512.nc',
@@ -108,9 +100,6 @@
 <!--zmconv_num_cin           >   1         </zmconv_num_cin-->
 
 <!--prescribed_strataero_cycle_yr>  1850          </prescribed_strataero_cycle_yr-->
-
-<srf_emis_type            >    INTERP_MISSING_MONTHS  </srf_emis_type>
-<ext_frc_type             >    INTERP_MISSING_MONTHS  </ext_frc_type>
 
 <clubb_gamma_coef hgrid="0.9x1.25">0.286</clubb_gamma_coef>
 <clubb_gamma_coef hgrid="1.9x2.5" >0.264</clubb_gamma_coef>
@@ -163,7 +152,9 @@
 <!-- CMIP6 climatological volcanic background forcing -->
 <!--prescribed_strataero_file>' '</prescribed_strataero_file-->
 <prescribed_volcaero_datapath>atm/cam/volc</prescribed_volcaero_datapath>
-<prescribed_volcaero_file>CMIP_CAM6_radiation_v3_reformatted.nc</prescribed_volcaero_file>
+<prescribed_volcaero_file>CMIP_CAM6_radiation_average_v3_reformatted.nc</prescribed_volcaero_file>
+<prescribed_volcaero_cycle_yr>1850</prescribed_volcaero_cycle_yr>
+<prescribed_volcaero_type>CYCLICAL</prescribed_volcaero_type>
 <rad_climate>'A:Q:H2O','N:O2:O2','N:CO2:CO2','N:ozone:O3','N:N2O:N2O','N:CH4:CH4','N:CFC11:CFC11','N:CFC12:CFC12'</rad_climate>
 
 </namelist_defaults>
