@@ -6,10 +6,9 @@
 <bnd_topo hgrid="0.9x1.25">/work/olivie/topography-era/ERA_bnd_topo_noresm2_20191023.nc</bnd_topo>
 <met_rlx_time>6</met_rlx_time>
 <met_nudge_only_uvps>.true.</met_nudge_only_uvps>
-<met_nudge_temp>.false.</met_nudge_temp>
-<met_srf_land>.false.</met_srf_land>
 <met_data_file dyn="fv"  hgrid="0.9x1.25">$INPUTDATA_ROOT/noresm-only/inputForNudging/ERA_f09f09_32L_days/2001-01-01.nc</met_data_file>
 <met_filenames_list dyn="fv"  hgrid="0.9x1.25">noresm-only/inputForNudging/ERA_f09f09_32L_days/fileList2001-2015.txt</met_filenames_list>
+<drydep_method>'xactive_atm'</drydep_method>
 
 <!--micro_do_sb_physics>   .true.   </micro_do_sb_physics-->
 <!--do_tms>                .false.  </do_tms-->

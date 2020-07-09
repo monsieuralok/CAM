@@ -129,7 +129,7 @@ begin
    ; Note the SOA formed is supposed to be MSA which is factor 3 larger mole-weight than S
 
    if(GdepI .eq. "Neu") then
-     emis_I=(/(f1_I[:]->SFSO2)/)/1.998 + (/(f1_I[:]->SO2_CMXF)/)/1.998
+     emis_I=(/(f1_I[:]->SFSO2)/)/1.998 + (/(f1_I[:]->SO2_XFRC_COL)/)/1.998
    else
      emis_I=(/(f1_I[:]->SFSO2)/)/1.998 + (/(f1_I[:]->SO2_CLXF)/)/1.998
    end if
@@ -143,8 +143,8 @@ begin
  sink_I= -(/f1_I[:]->WD_A_SO2/)/1.998 \   ;kg/m2/sec (positive in output file)
           -(/f1_I[:]->DF_SO2/)/1.998 \     ;kg/m2/sec (positive in output file)  
           +(/f1_I[:]->AQ_SO2/)/1.998 \     ;kg/m2/ses (negative in output file)
-          +(/f1_I[:]->GS_SO2/)/1.998 - (/f1_I[:]->SO2_CMXF/)/1.998 - so2_formed_from_dms_as_s_I  ; net chemical loss (gas phase)
- chlossg_I = (/f1_I[:]->GS_SO2/)/1.998 - (/f1_I[:]->SO2_CMXF/)/1.998 \ 
+          +(/f1_I[:]->GS_SO2/)/1.998 - (/f1_I[:]->SO2_XFRC_COL/)/1.998 - so2_formed_from_dms_as_s_I  ; net chemical loss (gas phase)
+ chlossg_I = (/f1_I[:]->GS_SO2/)/1.998 - (/f1_I[:]->SO2_XFRC_COL/)/1.998 \ 
             - so2_formed_from_dms_as_s_I  ; net chemical loss (gas phase)
    else
  sink_I=-(/f1_I[:]->WD_A_SO2/)/1.998 \   ;kg/m2/sec (positive in output file)
@@ -160,7 +160,7 @@ begin
  end if
 
    if(GdepI .eq. "Neu") then
-     emis_II=(/(f1_II[:]->SFSO2)/)/1.998 + (/(f1_II[:]->SO2_CMXF)/)/1.998
+     emis_II=(/(f1_II[:]->SFSO2)/)/1.998 + (/(f1_II[:]->SO2_XFRC_COL)/)/1.998
    else
      emis_II=(/(f1_II[:]->SFSO2)/)/1.998 + (/(f1_II[:]->SO2_CLXF)/)/1.998
    end if
@@ -173,8 +173,8 @@ sour_II=emis_II + so2_formed_from_dms_as_s_II
  sink_II= -(/f1_II[:]->WD_A_SO2/)/1.998 \   ;kg/m2/sec (positive in output file)
           -(/f1_II[:]->DF_SO2/)/1.998 \     ;kg/m2/sec (positive in output file)  
           +(/f1_II[:]->AQ_SO2/)/1.998 \     ;kg/m2/ses (negative in output file)
-          +(/f1_II[:]->GS_SO2/)/1.998 - (/f1_II[:]->SO2_CMXF/)/1.998 - so2_formed_from_dms_as_s_II  ; net chemical loss (gas phase)
- chlossg_II = (/f1_II[:]->GS_SO2/)/1.998 - (/f1_II[:]->SO2_CMXF/)/1.998 \ 
+          +(/f1_II[:]->GS_SO2/)/1.998 - (/f1_II[:]->SO2_XFRC_COL/)/1.998 - so2_formed_from_dms_as_s_II  ; net chemical loss (gas phase)
+ chlossg_II = (/f1_II[:]->GS_SO2/)/1.998 - (/f1_II[:]->SO2_XFRC_COL/)/1.998 \ 
             - so2_formed_from_dms_as_s_II  ; net chemical loss (gas phase)
    else
  sink_II= -(/f1_II[:]->WD_A_SO2/)/1.998 \   ;kg/m2/sec (positive in output file)
@@ -198,7 +198,7 @@ sour_II=emis_II + so2_formed_from_dms_as_s_II
  else
    
    if(GdepI .eq. "Neu") then
-     emis_I= (/(f1_I[:]->SFSO4_PR)/)/3.06 + (/(f1_I[:]->SO4_PR_CMXF)/)/3.06
+     emis_I= (/(f1_I[:]->SFSO4_PR)/)/3.06 + (/(f1_I[:]->SO4_PR_XFRC_COL)/)/3.06
    else
      emis_I= (/(f1_I[:]->SFSO4_PR)/)/3.06 + (/(f1_I[:]->SO4_PR_CLXF)/)/3.06
    end if
@@ -236,7 +236,7 @@ sour_II=emis_II + so2_formed_from_dms_as_s_II
  end if
 
    if(GdepII .eq. "Neu") then
-    emis_II= (/(f1_II[:]->SFSO4_PR)/)/3.06 + (/(f1_II[:]->SO4_PR_CMXF)/)/3.06
+    emis_II= (/(f1_II[:]->SFSO4_PR)/)/3.06 + (/(f1_II[:]->SO4_PR_XFRC_COL)/)/3.06
    else
     emis_II= (/(f1_II[:]->SFSO4_PR)/)/3.06 + (/(f1_II[:]->SO4_PR_CLXF)/)/3.06
    end if
@@ -280,7 +280,7 @@ sour_II=emis_II + so2_formed_from_dms_as_s_II
    sink_I=(/f1_I[:]->WET_BC/)+(/f1_I[:]->DRY_BC/)
  else
   if(GdepII .eq. "Neu") then
-   emis_I=(/(f1_I[:]->SFBC_A)/) + (/(f1_I[:]->SFBC_AC)/) + (/(f1_I[:]->SFBC_AX)/) + (/(f1_I[:]->SFBC_AI)/) + (/(f1_I[:]->SFBC_NI)/) + (/(f1_I[:]->SFBC_N)/) + (/(f1_I[:]->BC_AX_CMXF)/) + (/(f1_I[:]->BC_NI_CMXF)/) + (/(f1_I[:]->BC_N_CMXF)/)
+   emis_I=(/(f1_I[:]->SFBC_A)/) + (/(f1_I[:]->SFBC_AC)/) + (/(f1_I[:]->SFBC_AX)/) + (/(f1_I[:]->SFBC_AI)/) + (/(f1_I[:]->SFBC_NI)/) + (/(f1_I[:]->SFBC_N)/) + (/(f1_I[:]->BC_AX_XFRC_COL)/) + (/(f1_I[:]->BC_NI_XFRC_COL)/) + (/(f1_I[:]->BC_N_XFRC_COL)/)
   else
    emis_I=(/(f1_I[:]->SFBC_A)/) + (/(f1_I[:]->SFBC_AC)/) + (/(f1_I[:]->SFBC_AX)/) + (/(f1_I[:]->SFBC_AI)/) + (/(f1_I[:]->SFBC_NI)/) + (/(f1_I[:]->SFBC_N)/) + (/(f1_I[:]->BC_AX_CLXF)/) + (/(f1_I[:]->BC_NI_CLXF)/) + (/(f1_I[:]->BC_N_CLXF)/)
   end if
@@ -297,7 +297,7 @@ sour_II=emis_II + so2_formed_from_dms_as_s_II
    sink_I=wet_I-dry_I
  end if
   if(GdepII .eq. "Neu") then
- emis_II=(/(f1_II[:]->SFBC_A)/) + (/(f1_II[:]->SFBC_AC)/) + (/(f1_II[:]->SFBC_AX)/) + (/(f1_II[:]->SFBC_AI)/) + (/(f1_II[:]->SFBC_NI)/) + (/(f1_II[:]->SFBC_N)/) + (/(f1_II[:]->BC_AX_CMXF)/) + (/(f1_II[:]->BC_NI_CMXF)/) + (/(f1_II[:]->BC_N_CMXF)/)
+ emis_II=(/(f1_II[:]->SFBC_A)/) + (/(f1_II[:]->SFBC_AC)/) + (/(f1_II[:]->SFBC_AX)/) + (/(f1_II[:]->SFBC_AI)/) + (/(f1_II[:]->SFBC_NI)/) + (/(f1_II[:]->SFBC_N)/) + (/(f1_II[:]->BC_AX_XFRC_COL)/) + (/(f1_II[:]->BC_NI_XFRC_COL)/) + (/(f1_II[:]->BC_N_XFRC_COL)/)
   else
  emis_II=(/(f1_II[:]->SFBC_A)/) + (/(f1_II[:]->SFBC_AC)/) + (/(f1_II[:]->SFBC_AX)/) + (/(f1_II[:]->SFBC_AI)/) + (/(f1_II[:]->SFBC_NI)/) + (/(f1_II[:]->SFBC_N)/) + (/(f1_II[:]->BC_AX_CLXF)/) + (/(f1_II[:]->BC_NI_CLXF)/) + (/(f1_II[:]->BC_N_CLXF)/)
   end if
@@ -336,7 +336,7 @@ sour_II=emis_II
    MSAProd_I = 0.0*terpeneLoss_I
 
    if(GdepII .eq. "Neu") then
-    emis_I=(/(f1_I[:]->SFOM_AI)/) + (/(f1_I[:]->SFOM_AC)/) + (/(f1_I[:]->SFOM_NI)/) +  (/f1_I[:]->OM_NI_CMXF/)
+    emis_I=(/(f1_I[:]->SFOM_AI)/) + (/(f1_I[:]->SFOM_AC)/) + (/(f1_I[:]->SFOM_NI)/) +  (/f1_I[:]->OM_NI_XFRC_COL/)
    else
     emis_I=(/(f1_I[:]->SFOM_AI)/) + (/(f1_I[:]->SFOM_AC)/) + (/(f1_I[:]->SFOM_NI)/) +  (/f1_I[:]->OM_NI_CLXF/)
    end if
@@ -367,7 +367,7 @@ sour_II=emis_II
  MSAProd_II = 0.0*terpeneLoss_II
 
   if(GdepII .eq. "Neu") then
-   emis_II=(/(f1_II[:]->SFOM_AI)/) + (/(f1_II[:]->SFOM_AC)/) + (/(f1_II[:]->SFOM_NI)/) +  (/f1_II[:]->OM_NI_CMXF/)
+   emis_II=(/(f1_II[:]->SFOM_AI)/) + (/(f1_II[:]->SFOM_AC)/) + (/(f1_II[:]->SFOM_NI)/) +  (/f1_II[:]->OM_NI_XFRC_COL/)
   else
     emis_I=(/(f1_I[:]->SFOM_AI)/) + (/(f1_I[:]->SFOM_AC)/) + (/(f1_I[:]->SFOM_NI)/) +  (/f1_I[:]->OM_NI_CLXF/)
   end if
