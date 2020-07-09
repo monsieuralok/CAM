@@ -14,7 +14,6 @@ begin
  re=6378.39e3            ; earth radius in m
  coffa=pi*re^2./180.      
  area1=4.*pi*re^2          
- small=1.0e-15           ; small number
 
 ; *************************************************************************
 ; **** To be edited by the user if the ncl script is run interactively ****
@@ -24,10 +23,6 @@ begin
   plot_type = 3                      ; 1 => TOA SW + LW net flux imbalance
                                      ; 2 => PD  SW cloud forcing at TOA 
                                      ; 3 => PD  LW cloud forcing at TOA 
-                                     ; 4 => PD  SW surface albedo 
-                                     ; 5 => PD  SW clear-sky surface albedo 
-                                     ; 6 => PD-PI SW surface albedo 
-                                     ; 7 => PD-PI SW clear-sky surface albedo 
   end if
  if (.not. isvar("format")) then        ; is format on command line?
   format = "ps"
@@ -81,30 +76,6 @@ begin
  varname="PD LW cloud forcing at TOA (LWCF)"             ; variable name used in text string:
  forc_I=(/(f1PD_I[:]->LWCF)/)  ; variable to be plotted from I
  forc_II=(/(f1PD_II[:]->LWCF)/)  ; variable to be plotted from II
- else if (plot_type.eq.4) then
- var="SURFalb"               ; name of input-variable and plot
- varname="PD SW surface albedo"             ; variable name used in text string:
- forc_I=((/(f1PD_I[:]->FSDS)/)-(/(f1PD_I[:]->FSNS)/))/((/(f1PD_I[:]->FSDS)/)+small) ; variable to be plotted from I
- forc_II=((/(f1PD_II[:]->FSDS)/)-(/(f1PD_II[:]->FSNS)/))/((/(f1PD_II[:]->FSDS)/)+small)  ; variable to be plotted from II
- else if (plot_type.eq.5) then
- var="SURFalbcs"               ; name of input-variable and plot
- varname="PD SW clear-sky surface albedo"             ; variable name used in text string:
- forc_I=((/(f1PD_I[:]->FSDSC)/)-(/(f1PD_I[:]->FSNSC)/))/((/(f1PD_I[:]->FSDSC)/)+small) ; variable to be plotted from I
- forc_II=((/(f1PD_II[:]->FSDSC)/)-(/(f1PD_II[:]->FSNSC)/))/((/(f1PD_II[:]->FSDSC)/)+small)  ; variable to be plotted from II
- else if (plot_type.eq.6) then
- var="dSURFalb"               ; name of input-variable and plot
- varname="PD-PI SW surface albedo"             ; variable name used in text string:
- forc_I=((/(f1PD_I[:]->FSDS)/)-(/(f1PD_I[:]->FSNS)/))/((/(f1PD_I[:]->FSDS)/)+small) - ((/(f1PI_I[:]->FSDS)/)-(/(f1PI_I[:]->FSNS)/))/((/(f1PI_I[:]->FSDS)/)+small)
- forc_II=((/(f1PD_II[:]->FSDS)/)-(/(f1PD_II[:]->FSNS)/))/((/(f1PD_II[:]->FSDS)/)+small) - ((/(f1PI_II[:]->FSDS)/)-(/(f1PI_II[:]->FSNS)/))/((/(f1PI_II[:]->FSDS)/)+small)
- else if (plot_type.eq.7) then
- var="dSURFalbcs"               ; name of input-variable and plot
- varname="PD-PI SW cs surface albedo"             ; variable name used in text string:
- forc_I=((/(f1PD_I[:]->FSDSC)/)-(/(f1PD_I[:]->FSNSC)/))/((/(f1PD_I[:]->FSDSC)/)+small) - ((/(f1PI_I[:]->FSDSC)/)-(/(f1PI_I[:]->FSNSC)/))/((/(f1PI_I[:]->FSDSC)/)+small)
- forc_II=((/(f1PD_II[:]->FSDSC)/)-(/(f1PD_II[:]->FSNSC)/))/((/(f1PD_II[:]->FSDSC)/)+small) - ((/(f1PI_II[:]->FSDSC)/)-(/(f1PI_II[:]->FSNSC)/))/((/(f1PI_II[:]->FSDSC)/)+small)
- end if
- end if
- end if
- end if
  end if
  end if
  end if
@@ -137,11 +108,8 @@ begin
    digg=(/-150,-100,-75,-50,-30,-20,-15,-10,-5,0/)
  else if (var .eq. "LWCF") then
    digg=(/-5,0,5,10,15,20,30,50,75,100/)
- else if (var .eq. "SURFalb" .or. var .eq. "SURFalbcs") then
-   digg=(/0.05,0.1,0.15,0.2,0.3,0.4,0.5,0.6,0.7,0.8/)                       
- else 
-   digg=(/-.2,-.1,-.05,-.025,-.01,.0,.01,.025,.05,.1,.2/)
- end if
+ else
+   digg=(/0.0,1.0/)                         ; Replace with error message
  end if
  end if
  end if
@@ -192,20 +160,12 @@ begin
   res@cnLevels       =   sprintf("%5.3f",digg)             ; min level
 
 ;  res@tiMainString   = "CAM4-Oslo"
- if (plot_type.ge.4) then
-  res@gsnRightString   = "avg = "+sprintf("%5.3f",(sum(dim_avg_n(forc_Ia,0))/area1))
- else
   res@gsnRightString   = "avg = "+sprintf("%5.3f",(sum(dim_avg_n(forc_Ia,0))/area1))+" W m~S~-2~N~"
- end if
-res@gsnLeftString   = varname
+  res@gsnLeftString   = varname
   plot(0) = gsn_csm_contour_map_ce(wks,dim_avg_n_Wrap(forc_I,0),res)    ; create the plot
 
 ;  res@tiMainString   = "CAM5-Oslo"
- if (plot_type.ge.4) then
-  res@gsnRightString   = "avg = "+sprintf("%5.3f",(sum(dim_avg_n(forc_Ia,0))/area1))
- else
   res@gsnRightString  = "avg = "+sprintf("%5.3f",(sum(dim_avg_n(forc_IIa,0))/area1))+" W m~S~-2~N~"
- end if
   res@gsnLeftString   = varname
   plot(1) = gsn_csm_contour_map_ce(wks,dim_avg_n_Wrap(forc_II,0),res)   ; create the plot
 
